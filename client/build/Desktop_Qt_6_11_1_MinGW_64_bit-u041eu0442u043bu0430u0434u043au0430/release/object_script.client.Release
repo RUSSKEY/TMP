@@ -1,0 +1,11 @@
+release/authdialog.o
+release/authregcontainer.o
+release/main.o
+release/mainwindow.o
+release/regdialog.o
+release/singletonclient.o
+release/moc_authdialog.o
+release/moc_authregcontainer.o
+release/moc_mainwindow.o
+release/moc_regdialog.o
+release/moc_singletonclient.o

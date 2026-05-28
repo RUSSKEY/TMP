@@ -1,0 +1,38 @@
+\doxysection{dbmanager.\+h}
+\hypertarget{dbmanager_8h_source}{}\label{dbmanager_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ DATABASEMANAGER\_H}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ DATABASEMANAGER\_H}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QSqlDatabase>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00016}\doxymbox{\hyperlink{classDatabaseManager}{00016}}\ \textcolor{keyword}{class\ }DatabaseManager}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00018}00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00019}00019\ \ \ \ \ \textcolor{comment}{//\ Запрещаем\ копирование\ (для\ синглтона)}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00020}00020\ \ \ \ \ DatabaseManager(\textcolor{keyword}{const}\ DatabaseManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00021}00021\ \ \ \ \ DatabaseManager\&\ operator=(\textcolor{keyword}{const}\ DatabaseManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{static}\ DatabaseManager*\ \doxymbox{\hyperlink{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}{instance}}();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00035}00035\ \ \ \ \ QSqlDatabase\ \doxymbox{\hyperlink{classDatabaseManager_a91e8c05955bc77381280f1d44f0a751b}{database}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00045}00045\ \ \ \ \ \textcolor{keyword}{static}\ QString\ \doxymbox{\hyperlink{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}{hashPassword}}(\textcolor{keyword}{const}\ QString\&\ password);}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00047}00047\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00053}00053\ \ \ \ \ DatabaseManager();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00058}00058\ \ \ \ \ \string~DatabaseManager()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{void}\ initializeDatabase();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00072}00072\ \ \ \ \ \textcolor{keywordtype}{void}\ createTables();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00074}00074\ \ \ \ \ \textcolor{keyword}{static}\ DatabaseManager*\ m\_instance;\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00075}00075\ \ \ \ \ QSqlDatabase\ m\_database;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00076}00076\ \};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8h_source_l00078}00078\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DATABASEMANAGER\_H}}
+
+\end{DoxyCode}

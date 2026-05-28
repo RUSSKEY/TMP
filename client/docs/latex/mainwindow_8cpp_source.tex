@@ -1,0 +1,94 @@
+\doxysection{mainwindow.\+cpp}
+\hypertarget{mainwindow_8cpp_source}{}\label{mainwindow_8cpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}mainwindow.h"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}ui\_mainwindow.h"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}singletonclient.h"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}authdialog.h"{}}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QFileDialog>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <QMessageBox>}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00009}\doxymbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{00009}}\ \doxymbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{MainWindow::MainWindow}}(QWidget\ *parent)}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00010}00010\ \ \ \ \ :\ QMainWindow(parent)}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00011}00011\ \ \ \ \ ,\ ui(new\ Ui::\doxymbox{\hyperlink{classMainWindow_a996c5a2b6f77944776856f08ec30858d}{MainWindow}})}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00013}00013\ \ \ \ \ ui-\/>setupUi(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00014}00014\ \ \ \ \ setWindowTitle(\textcolor{stringliteral}{"{}Crypto\ Application"{}});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00015}00015\ \ \ \ \ ui-\/>textEdit-\/>setReadOnly(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00017}00017\ \ \ \ \ QString\ lastResponse\ =\ \doxymbox{\hyperlink{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}{SingletonClient::instance}}()-\/>\doxymbox{\hyperlink{classSingletonClient_a9fb29b8b6d5cb2043c28611ee4d1d70f}{latestResponse}}();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordflow}{if}\ (!lastResponse.isEmpty())\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Last\ response:\(\backslash\)n"{}}\ +\ lastResponse);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00022}00022\ \ \ \ \ connect(ui-\/>pushButtonProcess,\ \&QPushButton::clicked,\ \textcolor{keyword}{this},\ \&MainWindow::on\_pushButtonProcess\_clicked);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00023}00023\ \ \ \ \ connect(ui-\/>pushButtonLoadImage,\ \&QPushButton::clicked,\ \textcolor{keyword}{this},\ \&MainWindow::on\_pushButtonLoadImage\_clicked);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00024}00024\ \ \ \ \ connect(ui-\/>pushButtonSolveEquation,\ \&QPushButton::clicked,\ \textcolor{keyword}{this},\ \&MainWindow::on\_pushButtonSolveEquation\_clicked);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00025}00025\ \ \ \ \ connect(ui-\/>pushButtonLogout,\ \&QPushButton::clicked,\ \textcolor{keyword}{this},\ \&MainWindow::on\_pushButtonLogout\_clicked);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00027}00027\ \ \ \ \ connect(\doxymbox{\hyperlink{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}{SingletonClient::instance}}(),\ \&\doxymbox{\hyperlink{classSingletonClient_ac8aa6b445bdd050fe76900f508b06ed5}{SingletonClient::responseReceived}},\ \textcolor{keyword}{this},\ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ QString\&\ text)\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (text.contains(\textcolor{stringliteral}{"{}Error:"{}}))\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Error:\ "{}}\ +\ text);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Server\ response:\(\backslash\)n"{}}\ +\ text);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00033}00033\ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00034}00034\ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00036}\doxymbox{\hyperlink{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}{00036}}\ \doxymbox{\hyperlink{classMainWindow_ae98d00a93bc118200eeef9f9bba1dba7}{MainWindow::\string~MainWindow}}()\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{delete}\ ui;}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00038}00038\ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00040}00040\ \textcolor{keywordtype}{void}\ MainWindow::on\_pushButtonProcess\_clicked()}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00041}00041\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00042}00042\ \ \ \ \ QString\ input\ =\ ui-\/>lineEditInput-\/>text().trimmed();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (input.isEmpty())\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Error:\ Input\ is\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00048}00048\ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Processing\ encryption\ request:\ "{}}\ +\ input);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00049}00049\ \ \ \ \ \doxymbox{\hyperlink{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}{SingletonClient::instance}}()-\/>\doxymbox{\hyperlink{classSingletonClient_a346bd448c482b26e0bd79f3925e72aba}{transmitCommand}}(\textcolor{stringliteral}{"{}ENCRYPT:"{}}\ +\ input);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00052}00052\ \textcolor{keywordtype}{void}\ MainWindow::on\_pushButtonLoadImage\_clicked()}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00053}00053\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00054}00054\ \ \ \ \ QString\ filePath\ =\ QFileDialog::getOpenFileName(\textcolor{keyword}{this},\ \textcolor{stringliteral}{"{}Select\ Image"{}},\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{stringliteral}{"{}Images\ (*.png\ *.jpg\ *.bmp)"{}});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordflow}{if}\ (!filePath.isEmpty())\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ currentImagePath\ =\ filePath;}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Image\ loaded:\ "{}}\ +\ filePath);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00058}00058\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00059}00059\ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00061}00061\ \textcolor{keywordtype}{void}\ MainWindow::on\_pushButtonSolveEquation\_clicked()}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00062}00062\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00063}00063\ \ \ \ \ QString\ func\ =\ ui-\/>funcInput-\/>text().trimmed();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00064}00064\ \ \ \ \ \textcolor{keywordtype}{double}\ a\ =\ ui-\/>doubleSpinBoxA-\/>value();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{double}\ b\ =\ ui-\/>doubleSpinBoxB-\/>value();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{keywordtype}{double}\ epsilon\ =\ ui-\/>doubleSpinBoxEpsilon-\/>value();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (a\ >=\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ QMessageBox::warning(\textcolor{keyword}{this},\ \textcolor{stringliteral}{"{}Error"{}},\ \textcolor{stringliteral}{"{}Value\ 'a'\ must\ be\ less\ than\ 'b'"{}});}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ Р¤РѕСЂРјРёСЂСѓРµРј\ РєРѕРјР°РЅРґСѓ\ РІ\ РїСЂР°РІРёР»СЊРЅРѕРј\ С„РѕСЂРјР°С‚Рµ\ (РЅРёР¶РЅРёР№\ СЂРµРіРёСЃС‚СЂ\ +\ РїСЂРѕР±РµР»)}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00074}00074\ \ \ \ \ QString\ equationCmd\ =\ QString(\textcolor{stringliteral}{"{}equation:\ \%1:\%2:\%3:\%4"{}})}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .arg(func)}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .arg(a)}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .arg(b)}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .arg(epsilon);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00080}00080\ \ \ \ \ ui-\/>textEdit-\/>append(\textcolor{stringliteral}{"{}>\ Sending\ equation\ to\ server:\ "{}}\ +\ equationCmd);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00081}00081\ \ \ \ \ \doxymbox{\hyperlink{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}{SingletonClient::instance}}()-\/>\doxymbox{\hyperlink{classSingletonClient_a346bd448c482b26e0bd79f3925e72aba}{transmitCommand}}(equationCmd);}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00082}00082\ \}}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00084}00084\ \textcolor{keywordtype}{void}\ MainWindow::on\_pushButtonLogout\_clicked()}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00085}00085\ \{}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00086}00086\ \ \ \ \ AuthDialog\ *authDialog\ =\ \textcolor{keyword}{new}\ AuthDialog();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00087}00087\ \ \ \ \ authDialog-\/>show();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00088}00088\ \ \ \ \ this-\/>close();}
+\DoxyCodeLine{\Hypertarget{mainwindow_8cpp_source_l00089}00089\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,209 @@
+\doxysection{mytcpserver.\+cpp}
+\hypertarget{mytcpserver_8cpp_source}{}\label{mytcpserver_8cpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}mytcpserver.h"{}}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}dbmanager.h"{}}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QStringList>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QSqlQuery>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <QSqlError>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <QRegularExpression>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00011}\doxymbox{\hyperlink{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7}{00011}}\ \doxymbox{\hyperlink{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7}{TcpServer::TcpServer}}(QObject*\ parent)\ :\ QObject(parent),}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00012}00012\ \ \ \ \ m\_server(new\ QTcpServer(this))}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00014}00014\ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_server-\/>listen(QHostAddress::Any,\ 33333))\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ qCritical()\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ start\ server"{}};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00016}00016\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}Server\ started\ on\ port\ 33333"{}};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ connect(m\_server,\ \&QTcpServer::newConnection,}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this,\ \&TcpServer::handleNewConnection);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00020}00020\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00021}00021\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00023}\doxymbox{\hyperlink{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}{00023}}\ \doxymbox{\hyperlink{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}{TcpServer::\string~TcpServer}}()}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00025}00025\ \ \ \ \ m\_server-\/>close();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00026}00026\ \ \ \ \ qDeleteAll(m\_connectedClients);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00029}00029\ \textcolor{keywordtype}{void}\ TcpServer::handleNewConnection()}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00030}00030\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00031}00031\ \ \ \ \ QTcpSocket*\ clientSocket\ =\ m\_server-\/>nextPendingConnection();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00032}00032\ \ \ \ \ m\_connectedClients.append(clientSocket);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00034}00034\ \ \ \ \ connect(clientSocket,\ \&QTcpSocket::readyRead,}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},\ [\textcolor{keyword}{this},\ clientSocket]()\ \{\ processClientData(clientSocket);\ \});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00036}00036\ \ \ \ \ connect(clientSocket,\ \&QTcpSocket::disconnected,}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{this},\ [\textcolor{keyword}{this},\ clientSocket]()\ \{\ handleClientDisconnected(clientSocket);\ \});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00039}00039\ \ \ \ \ sendResponse(clientSocket,\ \textcolor{stringliteral}{"{}Connected\ to\ server"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00042}00042\ \textcolor{keywordtype}{void}\ TcpServer::handleClientDisconnected(QTcpSocket*\ socket)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00043}00043\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00044}00044\ \ \ \ \ m\_connectedClients.removeAll(socket);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00045}00045\ \ \ \ \ socket-\/>deleteLater();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00046}00046\ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}Client\ disconnected"{}};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00049}00049\ \textcolor{keywordtype}{void}\ TcpServer::processClientData(QTcpSocket*\ socket)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00050}00050\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00051}00051\ \ \ \ \ QString\ data\ =\ QString::fromUtf8(socket-\/>readAll());}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00052}00052\ \ \ \ \ QStringList\ commands\ =\ data.split(QRegularExpression(\textcolor{stringliteral}{"{}[\(\backslash\)r\(\backslash\)n]+"{}}),\ Qt::SkipEmptyParts);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ QString\&\ rawCommand\ :\ commands)\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ QString\ command\ =\ rawCommand.trimmed();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (command.isEmpty())\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Processing\ command:"{}}\ <<\ command;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ QStringList\ parts\ =\ command.split(\textcolor{stringliteral}{"{}\ "{}},\ Qt::SkipEmptyParts);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parts.isEmpty())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Empty\ command"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ QString\ cmd\ =\ parts[0].toLower();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ QString\ args\ =\ parts.size()\ >\ 1\ ?\ parts.mid(1).join(\textcolor{stringliteral}{"{}\ "{}})\ :\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cmd\ ==\ \textcolor{stringliteral}{"{}reg"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ processRegistration(socket,\ args);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cmd\ ==\ \textcolor{stringliteral}{"{}auth"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ processAuthentication(socket,\ args);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cmd\ ==\ \textcolor{stringliteral}{"{}equation:"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ processEquation(socket,\ args);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cmd\ ==\ \textcolor{stringliteral}{"{}encrypt:"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ processEncryption(socket,\ args);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (cmd\ ==\ \textcolor{stringliteral}{"{}decrypt:"{}})\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ processDecryption(socket,\ args);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Unknown\ command"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00087}00087\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00088}00088\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00090}00090\ \textcolor{keywordtype}{void}\ TcpServer::processRegistration(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ credentials)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00091}00091\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{keyword}{const}\ QStringList\ parts\ =\ credentials.split(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (parts.size()\ !=\ 2)\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Use\ format\ 'reg\ login:password'"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00096}00096\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00098}00098\ \ \ \ \ \textcolor{keyword}{const}\ QString\ login\ =\ parts[0].trimmed();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keyword}{const}\ QString\ password\ =\ parts[1].trimmed();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{if}\ (login.isEmpty()\ ||\ password.isEmpty())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Login\ and\ password\ cannot\ be\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00104}00104\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00106}00106\ \ \ \ \ QString\ hashedPassword\ =\ \doxymbox{\hyperlink{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}{DatabaseManager::hashPassword}}(password);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00108}00108\ \ \ \ \ QSqlQuery\ query(\doxymbox{\hyperlink{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}{DatabaseManager::instance}}()-\/>database());}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00109}00109\ \ \ \ \ query.prepare(\textcolor{stringliteral}{"{}SELECT\ id\ FROM\ users\ WHERE\ login\ =\ :login"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00110}00110\ \ \ \ \ query.bindValue(\textcolor{stringliteral}{"{}:login"{}},\ login);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordflow}{if}\ (query.exec()\ \&\&\ query.next())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ User\ already\ exists"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00115}00115\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00117}00117\ \ \ \ \ query.prepare(\textcolor{stringliteral}{"{}INSERT\ INTO\ users\ (login,\ password)\ VALUES\ (:login,\ :password)"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00118}00118\ \ \ \ \ query.bindValue(\textcolor{stringliteral}{"{}:login"{}},\ login);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00119}00119\ \ \ \ \ query.bindValue(\textcolor{stringliteral}{"{}:password"{}},\ hashedPassword);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00121}00121\ \ \ \ \ \textcolor{keywordflow}{if}\ (query.exec())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Registration\ successful"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00123}00123\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Registration\ failed"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ qWarning()\ <<\ \textcolor{stringliteral}{"{}Database\ error:"{}}\ <<\ query.lastError().text();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00126}00126\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00127}00127\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00129}00129\ \textcolor{keywordtype}{void}\ TcpServer::processAuthentication(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ arguments)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00130}00130\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00131}00131\ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Auth\ arguments:"{}}\ <<\ arguments;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00133}00133\ \ \ \ \ QStringList\ creds\ =\ arguments.split(\textcolor{stringliteral}{"{}:"{}},\ Qt::SkipEmptyParts);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{if}\ (creds.size()\ !=\ 2)\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Use\ format\ 'auth\ login:password'"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Invalid\ auth\ format,\ received:"{}}\ <<\ arguments;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00138}00138\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00140}00140\ \ \ \ \ QString\ login\ =\ creds[0].trimmed();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00141}00141\ \ \ \ \ QString\ password\ =\ creds[1].trimmed();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{if}\ (login.isEmpty()\ ||\ password.isEmpty())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Login\ and\ password\ cannot\ be\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00146}00146\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00148}00148\ \ \ \ \ QString\ hashedPassword\ =\ \doxymbox{\hyperlink{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}{DatabaseManager::hashPassword}}(password);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00150}00150\ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Attempting\ auth\ for\ user:"{}}\ <<\ login;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00152}00152\ \ \ \ \ QSqlQuery\ query(\doxymbox{\hyperlink{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}{DatabaseManager::instance}}()-\/>database());}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00153}00153\ \ \ \ \ query.prepare(\textcolor{stringliteral}{"{}SELECT\ password\ FROM\ users\ WHERE\ login\ =\ :login"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00154}00154\ \ \ \ \ query.bindValue(\textcolor{stringliteral}{"{}:login"{}},\ login);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{if}\ (!query.exec())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Database\ error"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ qCritical()\ <<\ \textcolor{stringliteral}{"{}Database\ error:"{}}\ <<\ query.lastError().text();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00160}00160\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00162}00162\ \ \ \ \ \textcolor{keywordflow}{if}\ (!query.next())\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ User\ not\ found"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}User\ not\ found\ in\ database:"{}}\ <<\ login;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00166}00166\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00168}00168\ \ \ \ \ QString\ dbPassword\ =\ query.value(0).toString();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00169}00169\ \ \ \ \ \textcolor{keywordflow}{if}\ (dbPassword\ ==\ hashedPassword)\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Authentication\ successful"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}User\ authenticated:"{}}\ <<\ login;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00172}00172\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Error:\ Invalid\ password"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Password\ mismatch\ for\ user:"{}}\ <<\ login;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00175}00175\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00176}00176\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00178}00178\ \textcolor{keywordtype}{void}\ TcpServer::processEquation(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ arguments)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00179}00179\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00180}00180\ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Equation\ request\ received:"{}}\ <<\ arguments;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00182}00182\ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Equation\ solution\ request\ received\ and\ processed"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00183}00183\ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}Equation\ solved\ for\ client:"{}}\ <<\ socket-\/>peerAddress().toString();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00184}00184\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00186}00186\ \textcolor{keywordtype}{void}\ TcpServer::processEncryption(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ text)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00187}00187\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00188}00188\ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Encryption\ request\ received:"{}}\ <<\ text;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00190}00190\ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Text\ encrypted\ successfully\ (stub\ implementation)"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00191}00191\ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}Text\ encrypted\ for\ client:"{}}\ <<\ socket-\/>peerAddress().toString();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00192}00192\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00194}00194\ \textcolor{keywordtype}{void}\ TcpServer::processDecryption(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ text)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00195}00195\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00196}00196\ \ \ \ \ qDebug()\ <<\ \textcolor{stringliteral}{"{}Decryption\ request\ received:"{}}\ <<\ text;}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00197}00197\ \ \ \ \ sendResponse(socket,\ \textcolor{stringliteral}{"{}Decryption\ processed\ (stub\ implementation)"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00198}00198\ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}Decryption\ processed\ for\ client:"{}}\ <<\ socket-\/>peerAddress().toString();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00199}00199\ \}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00201}00201\ \textcolor{keywordtype}{void}\ TcpServer::sendResponse(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ message)}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00202}00202\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00203}00203\ \ \ \ \ socket-\/>write(message.toUtf8()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8cpp_source_l00204}00204\ \}}
+
+\end{DoxyCode}

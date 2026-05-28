@@ -1,0 +1,81 @@
+\doxysection{Класс Tcp\+Server}
+\hypertarget{classTcpServer}{}\label{classTcpServer}\index{TcpServer@{TcpServer}}
+
+
+TCP-\/сервер для обработки запросов клиентов.  
+
+
+
+
+{\ttfamily \+\#include $<$mytcpserver.\+h$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7}{Tcp\+Server}} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Конструктор TCP-\/сервера. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}{\texorpdfstring{$\sim$}{\string~}\+Tcp\+Server}} ()
+\begin{DoxyCompactList}\small\item\em Деструктор TCP-\/сервера. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+TCP-\/сервер для обработки запросов клиентов. 
+
+Обрабатывает команды регистрации, авторизации, решения уравнений, шифрования и дешифрования данных.
+
+\begin{DoxyAuthor}{Автор}
+Crypto\+App Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Версия}
+1.\+0 
+\end{DoxyVersion}
+
+
+См. определение в файле \doxymbox{\hyperlink{mytcpserver_8h_source}{mytcpserver.\+h}} строка \doxymbox{\hyperlink{mytcpserver_8h_source_l00018}{18}}
+
+
+
+\label{classTcpServer_doc-constructors}
+\Hypertarget{classTcpServer_doc-constructors}
+\doxysubsection{Конструктор(ы)}
+\Hypertarget{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7}\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\doxysubsubsection{\texorpdfstring{TcpServer()}{TcpServer()}}
+{\footnotesize\ttfamily \label{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7} 
+Tcp\+Server::\+\+Tcp\+Server (\begin{DoxyParamCaption}\item[{QObject \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Конструктор TCP-\/сервера. 
+
+Запускает сервер на порту 33333 и начинает прослушивание входящих подключений.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em parent} & Родительский объект (по умолчанию nullptr) \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \doxymbox{\hyperlink{mytcpserver_8cpp_source}{mytcpserver.\+cpp}} строка \doxymbox{\hyperlink{mytcpserver_8cpp_source_l00011}{11}}
+
+\Hypertarget{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}\index{TcpServer@{TcpServer}!````~TcpServer@{\texorpdfstring{$\sim$}{\string~}TcpServer}}
+\index{````~TcpServer@{\texorpdfstring{$\sim$}{\string~}TcpServer}!TcpServer@{TcpServer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}TcpServer()}{\string~TcpServer()}}
+{\footnotesize\ttfamily \label{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd} 
+Tcp\+Server::\+\texorpdfstring{$\sim$}{\string~}\+Tcp\+Server (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Деструктор TCP-\/сервера. 
+
+Закрывает все соединения и освобождает ресурсы. 
+
+См. определение в файле \doxymbox{\hyperlink{mytcpserver_8cpp_source}{mytcpserver.\+cpp}} строка \doxymbox{\hyperlink{mytcpserver_8cpp_source_l00023}{23}}
+
+
+
+Объявления и описания членов классов находятся в файлах:\+\begin{DoxyCompactItemize}
+\item 
+mytcpserver.\+h\item 
+mytcpserver.\+cpp\end{DoxyCompactItemize}

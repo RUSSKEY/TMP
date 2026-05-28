@@ -1,0 +1,76 @@
+\doxysection{dbmanager.\+cpp}
+\hypertarget{dbmanager_8cpp_source}{}\label{dbmanager_8cpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}dbmanager.h"{}}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}sha384.h"{}}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <QSqlQuery>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QSqlError>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QDebug>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00009}00009\ \doxymbox{\hyperlink{classDatabaseManager}{DatabaseManager}}*\ DatabaseManager::m\_instance\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00011}00011\ DatabaseManager::DatabaseManager()}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00012}00012\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00013}00013\ \ \ \ \ m\_database\ =\ QSqlDatabase::addDatabase(\textcolor{stringliteral}{"{}QSQLITE"{}});}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00014}00014\ \ \ \ \ m\_database.setDatabaseName(\textcolor{stringliteral}{"{}project\_data.db"{}});}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_database.open())\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ qCritical()\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ open\ database:"{}}\ <<\ m\_database.lastError().text();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00019}00019\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00021}00021\ \ \ \ \ qInfo()\ <<\ \textcolor{stringliteral}{"{}Database\ opened\ successfully"{}};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00022}00022\ \ \ \ \ initializeDatabase();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00023}00023\ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00025}\doxymbox{\hyperlink{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}{00025}}\ DatabaseManager*\ \doxymbox{\hyperlink{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}{DatabaseManager::instance}}()}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (!m\_instance)\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ m\_instance\ =\ \textcolor{keyword}{new}\ DatabaseManager();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00029}00029\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_instance;}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00031}00031\ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00033}\doxymbox{\hyperlink{classDatabaseManager_a91e8c05955bc77381280f1d44f0a751b}{00033}}\ QSqlDatabase\ \doxymbox{\hyperlink{classDatabaseManager_a91e8c05955bc77381280f1d44f0a751b}{DatabaseManager::database}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00034}00034\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{return}\ m\_database;}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00038}00038\ \textcolor{keywordtype}{void}\ DatabaseManager::initializeDatabase()}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00039}00039\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00040}00040\ \ \ \ \ QSqlQuery\ query(m\_database);}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (!query.exec(\textcolor{stringliteral}{"{}PRAGMA\ foreign\_keys\ =\ ON"{}}))\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ qWarning()\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ enable\ foreign\ keys:"{}}\ <<\ query.lastError().text();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00044}00044\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00046}00046\ \ \ \ \ createTables();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00049}00049\ \textcolor{keywordtype}{void}\ DatabaseManager::createTables()}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00050}00050\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00051}00051\ \ \ \ \ QSqlQuery\ query(m\_database);}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keyword}{const}\ QStringList\ tables\ =\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}CREATE\ TABLE\ IF\ NOT\ EXISTS\ users\ ("{}}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}id\ INTEGER\ PRIMARY\ KEY\ AUTOINCREMENT,\ "{}}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}login\ TEXT\ UNIQUE\ NOT\ NULL,\ "{}}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}password\ TEXT\ NOT\ NULL)"{}},}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00059}00059\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ tableSql\ :\ tables)\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!query.exec(tableSql))\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ qCritical()\ <<\ \textcolor{stringliteral}{"{}Failed\ to\ create\ table:"{}}\ <<\ query.lastError().text();}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00066}00066\ \}}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00068}\doxymbox{\hyperlink{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}{00068}}\ QString\ \doxymbox{\hyperlink{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}{DatabaseManager::hashPassword}}(\textcolor{keyword}{const}\ QString\&\ password)}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00069}00069\ \{}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{return}\ SHA384::hash(password);}
+\DoxyCodeLine{\Hypertarget{dbmanager_8cpp_source_l00071}00071\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My_Project_client: Класс SingletonClient</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default';
+mermaid.initialize({ startOnLoad: true, theme: theme });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">My_Project_client
+   </div>
+   <div id="projectbrief">Клиентское приложение с графическим интерфейсом</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.17.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+  initMenu('',true);
+  init_search();
+});
+</script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1" style="position:absolute;right:8px;top:8px;height:36px;"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2" style="float:right">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classSingletonClient.html','','classSingletonClient-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Класс SingletonClient</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Синглтон-клиент для TCP-соединения с сервером.  
+ <a href="#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="singletonclient_8h_source.html">singletonclient.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-signals" class="groupheader"><a id="signals" name="signals"></a>
+Сигналы</h2></td></tr>
+<tr class="memitem:ac8aa6b445bdd050fe76900f508b06ed5" id="r_ac8aa6b445bdd050fe76900f508b06ed5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac8aa6b445bdd050fe76900f508b06ed5">responseReceived</a> (const QString &amp;message)</td></tr>
+<tr class="memdesc:ac8aa6b445bdd050fe76900f508b06ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Сигнал, испускаемый при получении ответа от сервера.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:aae6842e77ea2d57376abe7117f5bc6eb" id="r_aae6842e77ea2d57376abe7117f5bc6eb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aae6842e77ea2d57376abe7117f5bc6eb">establishConnection</a> ()</td></tr>
+<tr class="memdesc:aae6842e77ea2d57376abe7117f5bc6eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Устанавливает соединение с сервером.  <br /></td></tr>
+<tr class="memitem:a346bd448c482b26e0bd79f3925e72aba" id="r_a346bd448c482b26e0bd79f3925e72aba"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a346bd448c482b26e0bd79f3925e72aba">transmitCommand</a> (const QString &amp;command)</td></tr>
+<tr class="memdesc:a346bd448c482b26e0bd79f3925e72aba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отправляет команду на сервер.  <br /></td></tr>
+<tr class="memitem:ad662cd6eb33315997a0fe84668d985e3" id="r_ad662cd6eb33315997a0fe84668d985e3"><td class="memItemLeft">QTcpSocket *&#160;</td><td class="memItemRight"><a class="el" href="#ad662cd6eb33315997a0fe84668d985e3">socket</a> () const</td></tr>
+<tr class="memdesc:ad662cd6eb33315997a0fe84668d985e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает указатель на TCP-сокет.  <br /></td></tr>
+<tr class="memitem:a9fb29b8b6d5cb2043c28611ee4d1d70f" id="r_a9fb29b8b6d5cb2043c28611ee4d1d70f"><td class="memItemLeft">QString&#160;</td><td class="memItemRight"><a class="el" href="#a9fb29b8b6d5cb2043c28611ee4d1d70f">latestResponse</a> () const</td></tr>
+<tr class="memdesc:a9fb29b8b6d5cb2043c28611ee4d1d70f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает последний полученный ответ от сервера.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Открытые статические члены</h2></td></tr>
+<tr class="memitem:a0361ba9c592fb2fdabaa38b174f8e3c8" id="r_a0361ba9c592fb2fdabaa38b174f8e3c8"><td class="memItemLeft">static <a class="el" href="classSingletonClient.html">SingletonClient</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a0361ba9c592fb2fdabaa38b174f8e3c8">instance</a> ()</td></tr>
+<tr class="memdesc:a0361ba9c592fb2fdabaa38b174f8e3c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает единственный экземпляр класса.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Синглтон-клиент для TCP-соединения с сервером. </p>
+<p>Обеспечивает единую точку доступа к сетевому соединению во всем приложении. Реализует паттерн проектирования Singleton.</p>
+<dl class="section author"><dt>Автор</dt><dd>CryptoApp Team </dd></dl>
+<dl class="section version"><dt>Версия</dt><dd>1.0 </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="singletonclient_8h_source.html">singletonclient.h</a> строка <a class="el" href="singletonclient_8h_source.html#l00015">15</a></p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Методы</h2>
+<a id="aae6842e77ea2d57376abe7117f5bc6eb" name="aae6842e77ea2d57376abe7117f5bc6eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae6842e77ea2d57376abe7117f5bc6eb">&#9670;&#160;</a></span>establishConnection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SingletonClient::establishConnection </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Устанавливает соединение с сервером. </p>
+<p>Подключается к серверу по адресу 127.0.0.1:33333 </p>
+
+<p class="definition">См. определение в файле <a class="el" href="singletonclient_8cpp_source.html">singletonclient.cpp</a> строка <a class="el" href="singletonclient_8cpp_source.html#l00021">21</a></p>
+
+</div>
+</div>
+<a id="a0361ba9c592fb2fdabaa38b174f8e3c8" name="a0361ba9c592fb2fdabaa38b174f8e3c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0361ba9c592fb2fdabaa38b174f8e3c8">&#9670;&#160;</a></span>instance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classSingletonClient.html">SingletonClient</a> * SingletonClient::instance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает единственный экземпляр класса. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>SingletonClient* Указатель на единственный экземпляр </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="singletonclient_8cpp_source.html">singletonclient.cpp</a> строка <a class="el" href="singletonclient_8cpp_source.html#l00014">14</a></p>
+
+</div>
+</div>
+<a id="a9fb29b8b6d5cb2043c28611ee4d1d70f" name="a9fb29b8b6d5cb2043c28611ee4d1d70f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fb29b8b6d5cb2043c28611ee4d1d70f">&#9670;&#160;</a></span>latestResponse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString SingletonClient::latestResponse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Возвращает последний полученный ответ от сервера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>QString Последний ответ или пустая строка, если ответов не было </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="singletonclient_8cpp_source.html">singletonclient.cpp</a> строка <a class="el" href="singletonclient_8cpp_source.html#l00055">55</a></p>
+
+</div>
+</div>
+<a id="ac8aa6b445bdd050fe76900f508b06ed5" name="ac8aa6b445bdd050fe76900f508b06ed5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8aa6b445bdd050fe76900f508b06ed5">&#9670;&#160;</a></span>responseReceived</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SingletonClient::responseReceived </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel signal">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Сигнал, испускаемый при получении ответа от сервера. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>Текст ответа от сервера </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad662cd6eb33315997a0fe84668d985e3" name="ad662cd6eb33315997a0fe84668d985e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad662cd6eb33315997a0fe84668d985e3">&#9670;&#160;</a></span>socket()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QTcpSocket * SingletonClient::socket </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Возвращает указатель на TCP-сокет. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>QTcpSocket* Указатель на объект сокета </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="singletonclient_8cpp_source.html">singletonclient.cpp</a> строка <a class="el" href="singletonclient_8cpp_source.html#l00051">51</a></p>
+
+</div>
+</div>
+<a id="a346bd448c482b26e0bd79f3925e72aba" name="a346bd448c482b26e0bd79f3925e72aba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a346bd448c482b26e0bd79f3925e72aba">&#9670;&#160;</a></span>transmitCommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SingletonClient::transmitCommand </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;</td>          <td class="paramname"><span class="paramname"><em>command</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отправляет команду на сервер. </p>
+<p>Форматирует команду с добавлением символов конца строки и отправляет.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>Текст команды для отправки </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="singletonclient_8cpp_source.html">singletonclient.cpp</a> строка <a class="el" href="singletonclient_8cpp_source.html#l00026">26</a></p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов классов находятся в файлах:<ul>
+<li><a class="el" href="singletonclient_8h_source.html">singletonclient.h</a></li>
+<li><a class="el" href="singletonclient_8cpp_source.html">singletonclient.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="classSingletonClient.html">SingletonClient</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
+  </ul>
+</div>
+</body>
+</html>

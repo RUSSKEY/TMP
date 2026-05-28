@@ -1,0 +1,11 @@
+debug/authdialog.o
+debug/authregcontainer.o
+debug/main.o
+debug/mainwindow.o
+debug/regdialog.o
+debug/singletonclient.o
+debug/moc_authdialog.o
+debug/moc_authregcontainer.o
+debug/moc_mainwindow.o
+debug/moc_regdialog.o
+debug/moc_singletonclient.o

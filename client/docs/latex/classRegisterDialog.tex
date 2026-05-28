@@ -1,0 +1,74 @@
+\doxysection{Класс Register\+Dialog}
+\hypertarget{classRegisterDialog}{}\label{classRegisterDialog}\index{RegisterDialog@{RegisterDialog}}
+
+
+Диалоговое окно регистрации нового пользователя.  
+
+
+
+
+{\ttfamily \+\#include $<$regdialog.\+h$>$}
+
+\doxysubsubsection*{Сигналы}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classRegisterDialog_a391aebf64af95380c6c314e03130d608}\label{classRegisterDialog_a391aebf64af95380c6c314e03130d608} 
+void {\bfseries show\+Auth\+Requested} ()
+\begin{DoxyCompactList}\small\item\em Сигнал запроса на открытие окна авторизации. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classRegisterDialog_a58097230bc9a9a0a91c0704c79ff3823}{Register\+Dialog}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Конструктор диалога регистрации. \end{DoxyCompactList}\item 
+\Hypertarget{classRegisterDialog_a3b53506497790b1e3b906fdedcd36344}\label{classRegisterDialog_a3b53506497790b1e3b906fdedcd36344} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Register\+Dialog} ()
+\begin{DoxyCompactList}\small\item\em Деструктор диалога регистрации. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Диалоговое окно регистрации нового пользователя. 
+
+Позволяет создать новую учетную запись с проверкой уникальности логина. Пароль хэшируется алгоритмом SHA-\/384 перед отправкой на сервер.
+
+\begin{DoxyAuthor}{Автор}
+Crypto\+App Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Версия}
+1.\+0 
+\end{DoxyVersion}
+
+
+См. определение в файле \doxymbox{\hyperlink{regdialog_8h_source}{regdialog.\+h}} строка \doxymbox{\hyperlink{regdialog_8h_source_l00018}{18}}
+
+
+
+\label{classRegisterDialog_doc-constructors}
+\Hypertarget{classRegisterDialog_doc-constructors}
+\doxysubsection{Конструктор(ы)}
+\Hypertarget{classRegisterDialog_a58097230bc9a9a0a91c0704c79ff3823}\index{RegisterDialog@{RegisterDialog}!RegisterDialog@{RegisterDialog}}
+\index{RegisterDialog@{RegisterDialog}!RegisterDialog@{RegisterDialog}}
+\doxysubsubsection{\texorpdfstring{RegisterDialog()}{RegisterDialog()}}
+{\footnotesize\ttfamily \label{classRegisterDialog_a58097230bc9a9a0a91c0704c79ff3823} 
+Register\+Dialog::\+\+Register\+Dialog (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Конструктор диалога регистрации. 
+
+Настраивает пользовательский интерфейс и подключает обработчики сигналов.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em parent} & Указатель на родительский виджет (по умолчанию nullptr) \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \doxymbox{\hyperlink{regdialog_8cpp_source}{regdialog.\+cpp}} строка \doxymbox{\hyperlink{regdialog_8cpp_source_l00005}{5}}
+
+
+
+Объявления и описания членов классов находятся в файлах:\+\begin{DoxyCompactItemize}
+\item 
+regdialog.\+h\item 
+regdialog.\+cpp\end{DoxyCompactItemize}

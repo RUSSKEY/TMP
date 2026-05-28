@@ -1,0 +1,161 @@
+\doxysection{Класс Singleton\+Client}
+\hypertarget{classSingletonClient}{}\label{classSingletonClient}\index{SingletonClient@{SingletonClient}}
+
+
+Синглтон-\/клиент для TCP-\/соединения с сервером.  
+
+
+
+
+{\ttfamily \+\#include $<$singletonclient.\+h$>$}
+
+\doxysubsubsection*{Сигналы}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classSingletonClient_ac8aa6b445bdd050fe76900f508b06ed5}{response\+Received}} (const QString \&message)
+\begin{DoxyCompactList}\small\item\em Сигнал, испускаемый при получении ответа от сервера. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classSingletonClient_aae6842e77ea2d57376abe7117f5bc6eb}{establish\+Connection}} ()
+\begin{DoxyCompactList}\small\item\em Устанавливает соединение с сервером. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{classSingletonClient_a346bd448c482b26e0bd79f3925e72aba}{transmit\+Command}} (const QString \&command)
+\begin{DoxyCompactList}\small\item\em Отправляет команду на сервер. \end{DoxyCompactList}\item 
+QTcp\+Socket \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classSingletonClient_ad662cd6eb33315997a0fe84668d985e3}{socket}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает указатель на TCP-\/сокет. \end{DoxyCompactList}\item 
+QString \doxymbox{\hyperlink{classSingletonClient_a9fb29b8b6d5cb2043c28611ee4d1d70f}{latest\+Response}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает последний полученный ответ от сервера. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classSingletonClient}{Singleton\+Client}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}{instance}} ()
+\begin{DoxyCompactList}\small\item\em Возвращает единственный экземпляр класса. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Синглтон-\/клиент для TCP-\/соединения с сервером. 
+
+Обеспечивает единую точку доступа к сетевому соединению во всем приложении. Реализует паттерн проектирования Singleton.
+
+\begin{DoxyAuthor}{Автор}
+Crypto\+App Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Версия}
+1.\+0 
+\end{DoxyVersion}
+
+
+См. определение в файле \doxymbox{\hyperlink{singletonclient_8h_source}{singletonclient.\+h}} строка \doxymbox{\hyperlink{singletonclient_8h_source_l00015}{15}}
+
+
+
+\label{classSingletonClient_doc-func-members}
+\Hypertarget{classSingletonClient_doc-func-members}
+\doxysubsection{Методы}
+\Hypertarget{classSingletonClient_aae6842e77ea2d57376abe7117f5bc6eb}\index{SingletonClient@{SingletonClient}!establishConnection@{establishConnection}}
+\index{establishConnection@{establishConnection}!SingletonClient@{SingletonClient}}
+\doxysubsubsection{\texorpdfstring{establishConnection()}{establishConnection()}}
+{\footnotesize\ttfamily \label{classSingletonClient_aae6842e77ea2d57376abe7117f5bc6eb} 
+void Singleton\+Client::\+establish\+Connection (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Устанавливает соединение с сервером. 
+
+Подключается к серверу по адресу 127.\+0.\+0.\+1:\+33333 
+
+См. определение в файле \doxymbox{\hyperlink{singletonclient_8cpp_source}{singletonclient.\+cpp}} строка \doxymbox{\hyperlink{singletonclient_8cpp_source_l00021}{21}}
+
+\Hypertarget{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}\index{SingletonClient@{SingletonClient}!instance@{instance}}
+\index{instance@{instance}!SingletonClient@{SingletonClient}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \label{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8} 
+\doxymbox{\hyperlink{classSingletonClient}{Singleton\+Client}} \texorpdfstring{$\ast$}{*} Singleton\+Client::\+instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Возвращает единственный экземпляр класса. 
+
+\begin{DoxyReturn}{Возвращает}
+Singleton\+Client\texorpdfstring{$\ast$}{*} Указатель на единственный экземпляр 
+\end{DoxyReturn}
+
+
+См. определение в файле \doxymbox{\hyperlink{singletonclient_8cpp_source}{singletonclient.\+cpp}} строка \doxymbox{\hyperlink{singletonclient_8cpp_source_l00014}{14}}
+
+\Hypertarget{classSingletonClient_a9fb29b8b6d5cb2043c28611ee4d1d70f}\index{SingletonClient@{SingletonClient}!latestResponse@{latestResponse}}
+\index{latestResponse@{latestResponse}!SingletonClient@{SingletonClient}}
+\doxysubsubsection{\texorpdfstring{latestResponse()}{latestResponse()}}
+{\footnotesize\ttfamily \label{classSingletonClient_a9fb29b8b6d5cb2043c28611ee4d1d70f} 
+QString Singleton\+Client::\+latest\+Response (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Возвращает последний полученный ответ от сервера. 
+
+\begin{DoxyReturn}{Возвращает}
+QString Последний ответ или пустая строка, если ответов не было 
+\end{DoxyReturn}
+
+
+См. определение в файле \doxymbox{\hyperlink{singletonclient_8cpp_source}{singletonclient.\+cpp}} строка \doxymbox{\hyperlink{singletonclient_8cpp_source_l00055}{55}}
+
+\Hypertarget{classSingletonClient_ac8aa6b445bdd050fe76900f508b06ed5}\index{SingletonClient@{SingletonClient}!responseReceived@{responseReceived}}
+\index{responseReceived@{responseReceived}!SingletonClient@{SingletonClient}}
+\doxysubsubsection{\texorpdfstring{responseReceived}{responseReceived}}
+{\footnotesize\ttfamily \label{classSingletonClient_ac8aa6b445bdd050fe76900f508b06ed5} 
+void Singleton\+Client::\+response\+Received (\begin{DoxyParamCaption}\item[{const QString \&}]{message}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+Сигнал, испускаемый при получении ответа от сервера. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em message} & Текст ответа от сервера \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classSingletonClient_ad662cd6eb33315997a0fe84668d985e3}\index{SingletonClient@{SingletonClient}!socket@{socket}}
+\index{socket@{socket}!SingletonClient@{SingletonClient}}
+\doxysubsubsection{\texorpdfstring{socket()}{socket()}}
+{\footnotesize\ttfamily \label{classSingletonClient_ad662cd6eb33315997a0fe84668d985e3} 
+QTcp\+Socket \texorpdfstring{$\ast$}{*} Singleton\+Client::\+socket (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Возвращает указатель на TCP-\/сокет. 
+
+\begin{DoxyReturn}{Возвращает}
+QTcp\+Socket\texorpdfstring{$\ast$}{*} Указатель на объект сокета 
+\end{DoxyReturn}
+
+
+См. определение в файле \doxymbox{\hyperlink{singletonclient_8cpp_source}{singletonclient.\+cpp}} строка \doxymbox{\hyperlink{singletonclient_8cpp_source_l00051}{51}}
+
+\Hypertarget{classSingletonClient_a346bd448c482b26e0bd79f3925e72aba}\index{SingletonClient@{SingletonClient}!transmitCommand@{transmitCommand}}
+\index{transmitCommand@{transmitCommand}!SingletonClient@{SingletonClient}}
+\doxysubsubsection{\texorpdfstring{transmitCommand()}{transmitCommand()}}
+{\footnotesize\ttfamily \label{classSingletonClient_a346bd448c482b26e0bd79f3925e72aba} 
+void Singleton\+Client::\+transmit\+Command (\begin{DoxyParamCaption}\item[{const QString \&}]{command}{}\end{DoxyParamCaption})}
+
+
+
+Отправляет команду на сервер. 
+
+Форматирует команду с добавлением символов конца строки и отправляет.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em command} & Текст команды для отправки \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \doxymbox{\hyperlink{singletonclient_8cpp_source}{singletonclient.\+cpp}} строка \doxymbox{\hyperlink{singletonclient_8cpp_source_l00026}{26}}
+
+
+
+Объявления и описания членов классов находятся в файлах:\+\begin{DoxyCompactItemize}
+\item 
+singletonclient.\+h\item 
+singletonclient.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,109 @@
+\doxysection{Класс Database\+Manager}
+\hypertarget{classDatabaseManager}{}\label{classDatabaseManager}\index{DatabaseManager@{DatabaseManager}}
+
+
+Менеджер базы данных SQLite.  
+
+
+
+
+{\ttfamily \+\#include $<$dbmanager.\+h$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+QSql\+Database \doxymbox{\hyperlink{classDatabaseManager_a91e8c05955bc77381280f1d44f0a751b}{database}} () const
+\begin{DoxyCompactList}\small\item\em Возвращает объект подключения к базе данных. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static \doxymbox{\hyperlink{classDatabaseManager}{Database\+Manager}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}{instance}} ()
+\begin{DoxyCompactList}\small\item\em Возвращает единственный экземпляр менеджера БД. \end{DoxyCompactList}\item 
+static QString \doxymbox{\hyperlink{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}{hash\+Password}} (const QString \&password)
+\begin{DoxyCompactList}\small\item\em Вычисляет SHA-\/384 хэш пароля. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Менеджер базы данных SQLite. 
+
+Обеспечивает единую точку доступа к базе данных проекта. Реализует паттерн проектирования Singleton для управления подключением.
+
+\begin{DoxyAuthor}{Автор}
+Crypto\+App Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Версия}
+1.\+0 
+\end{DoxyVersion}
+
+
+См. определение в файле \doxymbox{\hyperlink{dbmanager_8h_source}{dbmanager.\+h}} строка \doxymbox{\hyperlink{dbmanager_8h_source_l00016}{16}}
+
+
+
+\label{classDatabaseManager_doc-func-members}
+\Hypertarget{classDatabaseManager_doc-func-members}
+\doxysubsection{Методы}
+\Hypertarget{classDatabaseManager_a91e8c05955bc77381280f1d44f0a751b}\index{DatabaseManager@{DatabaseManager}!database@{database}}
+\index{database@{database}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{database()}{database()}}
+{\footnotesize\ttfamily \label{classDatabaseManager_a91e8c05955bc77381280f1d44f0a751b} 
+QSql\+Database Database\+Manager::\+database (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Возвращает объект подключения к базе данных. 
+
+\begin{DoxyReturn}{Возвращает}
+QSql\+Database Объект базы данных SQLite 
+\end{DoxyReturn}
+
+
+См. определение в файле \doxymbox{\hyperlink{dbmanager_8cpp_source}{dbmanager.\+cpp}} строка \doxymbox{\hyperlink{dbmanager_8cpp_source_l00033}{33}}
+
+\Hypertarget{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030}\index{DatabaseManager@{DatabaseManager}!hashPassword@{hashPassword}}
+\index{hashPassword@{hashPassword}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{hashPassword()}{hashPassword()}}
+{\footnotesize\ttfamily \label{classDatabaseManager_a6cac023af947fa742fb00b4f3b36d030} 
+QString Database\+Manager::\+hash\+Password (\begin{DoxyParamCaption}\item[{const QString \&}]{password}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Вычисляет SHA-\/384 хэш пароля. 
+
+Используется для безопасного хранения паролей в базе данных.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em password} & Пароль в открытом виде \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+QString Хэш пароля в виде шестнадцатеричной строки 
+\end{DoxyReturn}
+
+
+См. определение в файле \doxymbox{\hyperlink{dbmanager_8cpp_source}{dbmanager.\+cpp}} строка \doxymbox{\hyperlink{dbmanager_8cpp_source_l00068}{68}}
+
+\Hypertarget{classDatabaseManager_a4bf189ab951f386629341dc3f6935934}\index{DatabaseManager@{DatabaseManager}!instance@{instance}}
+\index{instance@{instance}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \label{classDatabaseManager_a4bf189ab951f386629341dc3f6935934} 
+\doxymbox{\hyperlink{classDatabaseManager}{Database\+Manager}} \texorpdfstring{$\ast$}{*} Database\+Manager::\+instance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Возвращает единственный экземпляр менеджера БД. 
+
+\begin{DoxyReturn}{Возвращает}
+Database\+Manager\texorpdfstring{$\ast$}{*} Указатель на единственный экземпляр 
+\end{DoxyReturn}
+
+
+См. определение в файле \doxymbox{\hyperlink{dbmanager_8cpp_source}{dbmanager.\+cpp}} строка \doxymbox{\hyperlink{dbmanager_8cpp_source_l00025}{25}}
+
+
+
+Объявления и описания членов классов находятся в файлах:\+\begin{DoxyCompactItemize}
+\item 
+dbmanager.\+h\item 
+dbmanager.\+cpp\end{DoxyCompactItemize}

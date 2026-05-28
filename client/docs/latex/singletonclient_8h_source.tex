@@ -1,0 +1,41 @@
+\doxysection{singletonclient.\+h}
+\hypertarget{singletonclient_8h_source}{}\label{singletonclient_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <QtNetwork/QTcpSocket>}}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QtCore/QObject>}}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00015}\doxymbox{\hyperlink{classSingletonClient}{00015}}\ \textcolor{keyword}{class\ }SingletonClient\ :\ \textcolor{keyword}{public}\ QObject\ \{}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00016}00016\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00018}00018\ signals:}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00024}\doxymbox{\hyperlink{classSingletonClient_ac8aa6b445bdd050fe76900f508b06ed5}{00024}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classSingletonClient_ac8aa6b445bdd050fe76900f508b06ed5}{responseReceived}}(\textcolor{keyword}{const}\ QString\&\ message);}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00026}00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{static}\ SingletonClient*\ \doxymbox{\hyperlink{classSingletonClient_a0361ba9c592fb2fdabaa38b174f8e3c8}{instance}}();}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classSingletonClient_aae6842e77ea2d57376abe7117f5bc6eb}{establishConnection}}();}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classSingletonClient_a346bd448c482b26e0bd79f3925e72aba}{transmitCommand}}(\textcolor{keyword}{const}\ QString\&\ command);}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00055}00055\ \ \ \ \ QTcpSocket*\ \doxymbox{\hyperlink{classSingletonClient_ad662cd6eb33315997a0fe84668d985e3}{socket}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00062}00062\ \ \ \ \ QString\ \doxymbox{\hyperlink{classSingletonClient_a9fb29b8b6d5cb2043c28611ee4d1d70f}{latestResponse}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00064}00064\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00070}00070\ \ \ \ \ \textcolor{keywordtype}{void}\ connectionEstablished();}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00077}00077\ \ \ \ \ \textcolor{keywordtype}{void}\ dataAvailable();}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{void}\ connectionLost();}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00086}00086\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00092}00092\ \ \ \ \ \textcolor{keyword}{explicit}\ SingletonClient(QObject*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00094}00094\ \ \ \ \ QTcpSocket*\ m\_socket;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{static}\ SingletonClient*\ m\_instance;\ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00096}00096\ \ \ \ \ QString\ m\_lastResponse;\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{singletonclient_8h_source_l00097}00097\ \};}
+
+\end{DoxyCode}

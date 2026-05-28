@@ -1,0 +1,65 @@
+\doxysection{Класс Auth\+Reg\+Container}
+\hypertarget{classAuthRegContainer}{}\label{classAuthRegContainer}\index{AuthRegContainer@{AuthRegContainer}}
+
+
+Контейнер для переключения между окнами авторизации и регистрации.  
+
+
+
+
+{\ttfamily \+\#include $<$authregcontainer.\+h$>$}
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classAuthRegContainer_a796c8b9660e474ed6ed07cd140d209f5}{Auth\+Reg\+Container}} (QWidget \texorpdfstring{$\ast$}{*}parent=nullptr)
+\begin{DoxyCompactList}\small\item\em Конструктор контейнера. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Контейнер для переключения между окнами авторизации и регистрации. 
+
+Использует QStacked\+Widget для плавного переключения между двумя диалогами. Обеспечивает единую точку входа в приложение.
+
+\begin{DoxyAuthor}{Автор}
+Crypto\+App Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Версия}
+1.\+0 
+\end{DoxyVersion}
+
+
+См. определение в файле \doxymbox{\hyperlink{authregcontainer_8h_source}{authregcontainer.\+h}} строка \doxymbox{\hyperlink{authregcontainer_8h_source_l00017}{17}}
+
+
+
+\label{classAuthRegContainer_doc-constructors}
+\Hypertarget{classAuthRegContainer_doc-constructors}
+\doxysubsection{Конструктор(ы)}
+\Hypertarget{classAuthRegContainer_a796c8b9660e474ed6ed07cd140d209f5}\index{AuthRegContainer@{AuthRegContainer}!AuthRegContainer@{AuthRegContainer}}
+\index{AuthRegContainer@{AuthRegContainer}!AuthRegContainer@{AuthRegContainer}}
+\doxysubsubsection{\texorpdfstring{AuthRegContainer()}{AuthRegContainer()}}
+{\footnotesize\ttfamily \label{classAuthRegContainer_a796c8b9660e474ed6ed07cd140d209f5} 
+Auth\+Reg\+Container::\+\+Auth\+Reg\+Container (\begin{DoxyParamCaption}\item[{QWidget \texorpdfstring{$\ast$}{*}}]{parent}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Конструктор контейнера. 
+
+Создает и настраивает стековый виджет с двумя диалогами, подключает сигналы для переключения между ними.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em parent} & Родительский виджет (по умолчанию nullptr) \\
+\hline
+\end{DoxyParams}
+
+
+См. определение в файле \doxymbox{\hyperlink{authregcontainer_8cpp_source}{authregcontainer.\+cpp}} строка \doxymbox{\hyperlink{authregcontainer_8cpp_source_l00004}{4}}
+
+
+
+Объявления и описания членов классов находятся в файлах:\+\begin{DoxyCompactItemize}
+\item 
+authregcontainer.\+h\item 
+authregcontainer.\+cpp\end{DoxyCompactItemize}

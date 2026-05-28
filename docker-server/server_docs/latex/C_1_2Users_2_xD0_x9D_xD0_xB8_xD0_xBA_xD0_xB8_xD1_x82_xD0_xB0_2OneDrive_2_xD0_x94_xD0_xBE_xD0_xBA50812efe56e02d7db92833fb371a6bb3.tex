@@ -1,0 +1,30 @@
+\doxysection{C:\+/\+\+Users/\+Никита/\+\+One\+Drive/\+Документы/\+tmp-\/main/\+docker-\/server/\+sha384.\+h}
+\hypertarget{C_1_2Users_2_xD0_x9D_xD0_xB8_xD0_xBA_xD0_xB8_xD1_x82_xD0_xB0_2OneDrive_2_xD0_x94_xD0_xBE_xD0_xBA50812efe56e02d7db92833fb371a6bb3}{}\label{C_1_2Users_2_xD0_x9D_xD0_xB8_xD0_xBA_xD0_xB8_xD1_x82_xD0_xB0_2OneDrive_2_xD0_x94_xD0_xBE_xD0_xBA50812efe56e02d7db92833fb371a6bb3}Вычисляет SHA-\/384 хэш входной строки.
+
+Вычисляет SHA-\/384 хэш входной строки.
+\begin{DoxyParams}{Аргументы}
+{\em input} & Входная строка в кодировке UTF-\/8 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+QString Хэш-\/сумма в виде шестнадцатеричной строки (96 символов)
+\end{DoxyReturn}
+QString hash = SHA384::\+hash("{}mypassword"{});
+
+
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#ifndef\ SHA384\_H}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ SHA384\_H}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <QString>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class\ }\doxymbox{\hyperlink{classSHA384}{SHA384}}}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ QString\ hash(\textcolor{keyword}{const}\ QString\&\ input);}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SHA384\_H}}
+
+\end{DoxyCodeInclude}
+ 

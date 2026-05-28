@@ -1,0 +1,47 @@
+\doxysection{mytcpserver.\+h}
+\hypertarget{mytcpserver_8h_source}{}\label{mytcpserver_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ MYTCPSERVER\_H}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ MYTCPSERVER\_H}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <QTcpServer>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <QTcpSocket>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <QList>}}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00018}\doxymbox{\hyperlink{classTcpServer}{00018}}\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7}{TcpServer}}\ :\ \textcolor{keyword}{public}\ QObject}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00019}00019\ \{}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00020}00020\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00022}00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00030}00030\ \ \ \ \ \textcolor{keyword}{explicit}\ \doxymbox{\hyperlink{classTcpServer_ad706c7cb8a8eb3784b02a6f1b18a18c7}{TcpServer}}(QObject*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00037}00037\ \ \ \ \ \doxymbox{\hyperlink{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}{\string~TcpServer}}();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00039}00039\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ handleNewConnection();}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{void}\ handleClientDisconnected(QTcpSocket*\ socket);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00063}00063\ \ \ \ \ \textcolor{keywordtype}{void}\ processClientData(QTcpSocket*\ socket);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00065}00065\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00074}00074\ \ \ \ \ \textcolor{keywordtype}{void}\ processRegistration(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ credentials);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00084}00084\ \ \ \ \ \textcolor{keywordtype}{void}\ processAuthentication(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ arguments);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00094}00094\ \ \ \ \ \textcolor{keywordtype}{void}\ processEquation(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ arguments);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{void}\ processEncryption(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ text);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00114}00114\ \ \ \ \ \textcolor{keywordtype}{void}\ processDecryption(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ text);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00122}00122\ \ \ \ \ \textcolor{keywordtype}{void}\ sendResponse(QTcpSocket*\ socket,\ \textcolor{keyword}{const}\ QString\&\ message);}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00124}00124\ \ \ \ \ QTcpServer*\ m\_server;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00125}00125\ \ \ \ \ QList<QTcpSocket*>\ m\_connectedClients;\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00126}00126\ \};}
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{mytcpserver_8h_source_l00128}00128\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MYTCPSERVER\_H}}
+
+\end{DoxyCode}

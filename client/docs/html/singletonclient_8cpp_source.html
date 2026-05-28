@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My_Project_client: Исходный файл singletonclient.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default';
+mermaid.initialize({ startOnLoad: true, theme: theme });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">My_Project_client
+   </div>
+   <div id="projectbrief">Клиентское приложение с графическим интерфейсом</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.17.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
+  initMenu('',true);
+  init_search();
+});
+</script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1" style="position:absolute;right:8px;top:8px;height:36px;"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2" style="float:right">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('singletonclient_8cpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">singletonclient.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;singletonclient.h&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;QDebug&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><a class="code hl_class" href="classSingletonClient.html">SingletonClient</a>* SingletonClient::m_instance = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>SingletonClient::SingletonClient(QObject* parent) : QObject(parent) {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    m_socket = <span class="keyword">new</span> QTcpSocket(<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    connect(m_socket, &amp;QTcpSocket::connected, <span class="keyword">this</span>, &amp;SingletonClient::connectionEstablished);</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    connect(m_socket, &amp;QTcpSocket::readyRead, <span class="keyword">this</span>, &amp;SingletonClient::dataAvailable);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    connect(m_socket, &amp;QTcpSocket::disconnected, <span class="keyword">this</span>, &amp;SingletonClient::connectionLost);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>}</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="}">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classSingletonClient.html#a0361ba9c592fb2fdabaa38b174f8e3c8">   14</a></span>SingletonClient* <a class="code hl_function" href="classSingletonClient.html#a0361ba9c592fb2fdabaa38b174f8e3c8">SingletonClient::instance</a>() {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">if</span> (!m_instance) {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        m_instance = <span class="keyword">new</span> SingletonClient();</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    }</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">return</span> m_instance;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
+</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classSingletonClient.html#aae6842e77ea2d57376abe7117f5bc6eb">   21</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classSingletonClient.html#aae6842e77ea2d57376abe7117f5bc6eb">SingletonClient::establishConnection</a>() {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    qDebug() &lt;&lt; <span class="stringliteral">&quot;Establishing server connection...&quot;</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    m_socket-&gt;connectToHost(<span class="stringliteral">&quot;127.0.0.1&quot;</span>, 33333);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}</div>
+</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classSingletonClient.html#a346bd448c482b26e0bd79f3925e72aba">   26</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classSingletonClient.html#a346bd448c482b26e0bd79f3925e72aba">SingletonClient::transmitCommand</a>(<span class="keyword">const</span> QString&amp; command)</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>{</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="classSingletonClient.html#ad662cd6eb33315997a0fe84668d985e3">socket</a>()-&gt;state() == QAbstractSocket::ConnectedState) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        QString formattedCmd = command.trimmed() + <span class="stringliteral">&quot;\r\n&quot;</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <a class="code hl_function" href="classSingletonClient.html#ad662cd6eb33315997a0fe84668d985e3">socket</a>()-&gt;write(formattedCmd.toUtf8());</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        qDebug() &lt;&lt; <span class="stringliteral">&quot;Command sent:&quot;</span> &lt;&lt; formattedCmd.trimmed();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
+</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">void</span> SingletonClient::connectionEstablished() {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    qDebug() &lt;&lt; <span class="stringliteral">&quot;Server connection established&quot;</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">void</span> SingletonClient::dataAvailable() {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    QByteArray response = m_socket-&gt;readAll();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    QString text = QString::fromUtf8(response).trimmed().replace(<span class="stringliteral">&quot;\r&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    m_lastResponse = text;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    emit <a class="code hl_signal" href="classSingletonClient.html#ac8aa6b445bdd050fe76900f508b06ed5">responseReceived</a>(text);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keywordtype">void</span> SingletonClient::connectionLost() {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    qDebug() &lt;&lt; <span class="stringliteral">&quot;Disconnected from server&quot;</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="foldopen" id="foldopen00051" data-start="{" data-end="}">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classSingletonClient.html#ad662cd6eb33315997a0fe84668d985e3">   51</a></span>QTcpSocket* <a class="code hl_function" href="classSingletonClient.html#ad662cd6eb33315997a0fe84668d985e3">SingletonClient::socket</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> m_socket;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classSingletonClient.html#a9fb29b8b6d5cb2043c28611ee4d1d70f">   55</a></span>QString <a class="code hl_function" href="classSingletonClient.html#a9fb29b8b6d5cb2043c28611ee4d1d70f">SingletonClient::latestResponse</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">return</span> m_lastResponse;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+</div>
+<div class="ttc" id="aclassSingletonClient_html"><div class="ttname"><a href="classSingletonClient.html">SingletonClient</a></div><div class="ttdoc">Синглтон-клиент для TCP-соединения с сервером.</div><div class="ttdef"><b>Определения</b> <a href="singletonclient_8h_source.html#l00015">singletonclient.h:15</a></div></div>
+<div class="ttc" id="aclassSingletonClient_html_a0361ba9c592fb2fdabaa38b174f8e3c8"><div class="ttname"><a href="classSingletonClient.html#a0361ba9c592fb2fdabaa38b174f8e3c8">SingletonClient::instance</a></div><div class="ttdeci">static SingletonClient * instance()</div><div class="ttdoc">Возвращает единственный экземпляр класса.</div><div class="ttdef"><b>Определения</b> <a href="#l00014">singletonclient.cpp:14</a></div></div>
+<div class="ttc" id="aclassSingletonClient_html_a346bd448c482b26e0bd79f3925e72aba"><div class="ttname"><a href="classSingletonClient.html#a346bd448c482b26e0bd79f3925e72aba">SingletonClient::transmitCommand</a></div><div class="ttdeci">void transmitCommand(const QString &amp;command)</div><div class="ttdoc">Отправляет команду на сервер.</div><div class="ttdef"><b>Определения</b> <a href="#l00026">singletonclient.cpp:26</a></div></div>
+<div class="ttc" id="aclassSingletonClient_html_a9fb29b8b6d5cb2043c28611ee4d1d70f"><div class="ttname"><a href="classSingletonClient.html#a9fb29b8b6d5cb2043c28611ee4d1d70f">SingletonClient::latestResponse</a></div><div class="ttdeci">QString latestResponse() const</div><div class="ttdoc">Возвращает последний полученный ответ от сервера.</div><div class="ttdef"><b>Определения</b> <a href="#l00055">singletonclient.cpp:55</a></div></div>
+<div class="ttc" id="aclassSingletonClient_html_aae6842e77ea2d57376abe7117f5bc6eb"><div class="ttname"><a href="classSingletonClient.html#aae6842e77ea2d57376abe7117f5bc6eb">SingletonClient::establishConnection</a></div><div class="ttdeci">void establishConnection()</div><div class="ttdoc">Устанавливает соединение с сервером.</div><div class="ttdef"><b>Определения</b> <a href="#l00021">singletonclient.cpp:21</a></div></div>
+<div class="ttc" id="aclassSingletonClient_html_ac8aa6b445bdd050fe76900f508b06ed5"><div class="ttname"><a href="classSingletonClient.html#ac8aa6b445bdd050fe76900f508b06ed5">SingletonClient::responseReceived</a></div><div class="ttdeci">void responseReceived(const QString &amp;message)</div><div class="ttdoc">Сигнал, испускаемый при получении ответа от сервера.</div></div>
+<div class="ttc" id="aclassSingletonClient_html_ad662cd6eb33315997a0fe84668d985e3"><div class="ttname"><a href="classSingletonClient.html#ad662cd6eb33315997a0fe84668d985e3">SingletonClient::socket</a></div><div class="ttdeci">QTcpSocket * socket() const</div><div class="ttdoc">Возвращает указатель на TCP-сокет.</div><div class="ttdef"><b>Определения</b> <a href="#l00051">singletonclient.cpp:51</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>singletonclient.cpp</b></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
+  </ul>
+</div>
+</body>
+</html>
