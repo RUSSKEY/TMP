@@ -1,4 +1,4 @@
-﻿#include "mytcpserver.h"
+#include "mytcpserver.h"
 #include "dbmanager.h"
 #include <QDebug>
 #include <QStringList>
@@ -7,6 +7,7 @@
 #include <QRegularExpression>
 #include <QString>
 #include <cmath>
+#include <QFile>
 
 TcpServer::TcpServer(QObject* parent) : QObject(parent),
     m_server(new QTcpServer(this))
@@ -25,6 +26,8 @@ TcpServer::~TcpServer()
     m_server->close();
     qDeleteAll(m_connectedClients);
 }
+
+QMap<QTcpSocket*, QString> clientLogins;
 
 void TcpServer::handleNewConnection()
 {
@@ -103,7 +106,13 @@ void TcpServer::processRegistration(QTcpSocket* socket, const QString& credentia
         return;
     }
 
+    if (login.toLower() == "admin") {
+        sendResponse(socket, "Error: Access denied to register admin");
+        return;
+    }
+
     QString hashedPassword = DatabaseManager::hashPassword(password);
+    qDebug() << "[SHA-384] Исходный пароль:" << password << " -> ХЭШ:" << hashedPassword;
 
     QSqlQuery query(DatabaseManager::instance()->database());
     query.prepare("SELECT id FROM users WHERE login = :login");
@@ -114,15 +123,16 @@ void TcpServer::processRegistration(QTcpSocket* socket, const QString& credentia
         return;
     }
 
-    query.prepare("INSERT INTO users (login, password) VALUES (:login, :password)");
+    query.prepare("INSERT INTO users (login, password, role) VALUES (:login, :password, 'user')");
     query.bindValue(":login", login);
     query.bindValue(":password", hashedPassword);
 
     if (query.exec()) {
         sendResponse(socket, "Registration successful");
+        qInfo() << "New user registered successfully:" << login;
     } else {
         sendResponse(socket, "Error: Registration failed");
-        qWarning() << "Database error:" << query.lastError().text();
+        qWarning() << "Database insert error:" << query.lastError().text();
     }
 }
 
@@ -133,7 +143,6 @@ void TcpServer::processAuthentication(QTcpSocket* socket, const QString& argumen
     QStringList creds = arguments.split(":", Qt::SkipEmptyParts);
     if (creds.size() != 2) {
         sendResponse(socket, "Error: Use format 'auth login:password'");
-        qDebug() << "Invalid auth format, received:" << arguments;
         return;
     }
 
@@ -146,47 +155,159 @@ void TcpServer::processAuthentication(QTcpSocket* socket, const QString& argumen
     }
 
     QString hashedPassword = DatabaseManager::hashPassword(password);
-
-    qDebug() << "Attempting auth for user:" << login;
+    qDebug() << "[SHA-384] Исходный пароль:" << password << " -> ХЭШ:" << hashedPassword;
 
     QSqlQuery query(DatabaseManager::instance()->database());
-    query.prepare("SELECT password FROM users WHERE login = :login");
+    query.prepare("SELECT password, role FROM users WHERE login = :login");
     query.bindValue(":login", login);
 
     if (!query.exec()) {
         sendResponse(socket, "Error: Database error");
-        qCritical() << "Database error:" << query.lastError().text();
         return;
     }
 
     if (!query.next()) {
         sendResponse(socket, "Error: User not found");
-        qDebug() << "User not found in database:" << login;
         return;
     }
 
     QString dbPassword = query.value(0).toString();
+    QString dbRole = query.value(1).toString();
+
     if (dbPassword == hashedPassword) {
-        sendResponse(socket, "Authentication successful");
-        qInfo() << "User authenticated:" << login;
+        clientLogins[socket] = dbRole;
+
+        sendResponse(socket, QString("Authentication successful:%1").arg(dbRole));
+        qInfo() << "User authenticated successfully. Login:" << login << "Role:" << dbRole;
     } else {
         sendResponse(socket, "Error: Invalid password");
-        qDebug() << "Password mismatch for user:" << login;
     }
 }
 
 void TcpServer::processEquation(QTcpSocket* socket, const QString& arguments)
 {
-    qDebug() << "Equation request received:" << arguments;
+    qDebug() << "Equation/Admin request received:" << arguments;
 
-    sendResponse(socket, "Equation solution request received and processed");
-    qInfo() << "Equation solved for client:" << socket->peerAddress().toString();
+    // ФУНКЦИЯ АДМИНА 1: СОРТИРОВКА ПО АЛФАВИТУ
+    if (arguments.contains("get_users_sorted", Qt::CaseInsensitive)) {
+        if (clientLogins.value(socket) != "admin") {
+            sendResponse(socket, "Error: Access denied. Admin rights required.");
+            return;
+        }
+
+        QSqlQuery query(DatabaseManager::instance()->database());
+        query.prepare("SELECT login, role FROM users ORDER BY login ASC");
+        if (!query.exec()) {
+            sendResponse(socket, "Admin Error: Cannot access database");
+            return;
+        }
+
+        QStringList userList;
+        while (query.next()) {
+            userList.append(QString("%1(%2)").arg(query.value(0).toString(), query.value(1).toString()));
+        }
+        sendResponse(socket, QString("ADMIN_DATA:Sorted users: [ %1 ]").arg(userList.join(", ")));
+        return;
+    }
+
+    // ФУНКЦИЯ АДМИНА 2: ВЫБОР ПО ПАРАМЕТРАМ / ПОИСК
+    if (arguments.startsWith("search_user:", Qt::CaseInsensitive)) {
+        if (clientLogins.value(socket) != "admin") {
+            sendResponse(socket, "Error: Access denied. Admin rights required.");
+            return;
+        }
+
+        QString pattern = arguments.split(":")[1].trimmed();
+        QSqlQuery query(DatabaseManager::instance()->database());
+        query.prepare("SELECT login, role FROM users WHERE login LIKE :pattern");
+        query.bindValue(":pattern", "%" + pattern + "%");
+
+        if (!query.exec()) {
+            sendResponse(socket, "Admin Error: Search failed");
+            return;
+        }
+
+        QStringList userList;
+        while (query.next()) {
+            userList.append(QString("%1(%2)").arg(query.value(0).toString(), query.value(1).toString()));
+        }
+        sendResponse(socket, QString("ADMIN_DATA:Search result for '%1': [ %2 ]").arg(pattern, userList.join(", ")));
+        return;
+    }
+
+    // ФУНКЦИЯ АДМИНА 3: УДАЛЕНИЕ
+    if (arguments.startsWith("delete:", Qt::CaseInsensitive)) {
+        if (clientLogins.value(socket) != "admin") {
+            sendResponse(socket, "Error: Access denied. Admin rights required.");
+            return;
+        }
+
+        QString targetUser = arguments.split(":")[1].trimmed();
+        if (targetUser.toLower() == "admin") {
+            sendResponse(socket, "Admin Error: Cannot delete main admin!");
+            return;
+        }
+
+        QSqlQuery query(DatabaseManager::instance()->database());
+        query.prepare("DELETE FROM users WHERE login = :login");
+        query.bindValue(":login", targetUser);
+
+        if (query.exec() && query.numRowsAffected() > 0) {
+            sendResponse(socket, QString("ADMIN_DATA:User '%1' successfully deleted.").arg(targetUser));
+        } else {
+            sendResponse(socket, "Admin Error: User not found.");
+        }
+        return;
+    }
+
+    // УРАВНЕНИЯ МЕТОДОМ ХОРД
+    QString cleaned = arguments;
+    QStringList parts = cleaned.replace(" ", "").split(":");
+
+    if (parts.size() < 7) {
+        sendResponse(socket, "Equation error: Expected format A:B:C:D:a:b:eps");
+        return;
+    }
+
+    double A = parts[0].toDouble();
+    double B = parts[1].toDouble();
+    double C = parts[2].toDouble();
+    double D = parts[3].toDouble();
+    double a = parts[4].toDouble();
+    double b = parts[5].toDouble();
+    double eps = parts[6].toDouble();
+
+    double x_prev = a;
+    double x_curr = b;
+    double x_next = 0;
+
+    auto eval = [A, B, C, D](double x) {
+        return A*x*x*x + B*x*x + C*x + D;
+    };
+
+    for (int i = 0; i < 100; ++i) {
+        double fa = eval(x_prev);
+        double fb = eval(x_curr);
+
+        if (std::abs(fb - fa) < 1e-9) break;
+
+        x_next = x_curr - (fb * (x_curr - x_prev)) / (fb - fa);
+
+        if (std::abs(x_next - x_curr) < eps) {
+            x_curr = x_next;
+            break;
+        }
+        x_prev = x_curr;
+        x_curr = x_next;
+    }
+
+    sendResponse(socket, QString("Equation solved. Root found: %1").arg(x_curr));
+    qInfo() << "Equation solved dynamically. Result:" << x_curr;
 }
 
 void TcpServer::processEncryption(QTcpSocket* socket, const QString& text)
 {
     qDebug() << "Encryption request received:" << text;
-
     sendResponse(socket, "Text encrypted successfully (stub implementation)");
     qInfo() << "Text encrypted for client:" << socket->peerAddress().toString();
 }

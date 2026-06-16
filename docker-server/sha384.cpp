@@ -1,4 +1,4 @@
-﻿// sha384.cpp
+// sha384.cpp
 #include "sha384.h"
 #include <array>
 #include <algorithm>
@@ -8,7 +8,7 @@
 
 namespace {
 
-// РљРѕРЅСЃС‚Р°РЅС‚С‹ РґР»СЏ SHA-384
+// Константы для SHA-384
 constexpr std::array<uint64_t, 8> initialHash = {
     0xcbbb9d5dc1059ed8ULL, 0x629a292a367cd507ULL, 0x9159015a3070dd17ULL,
     0x152fecd8f70e5939ULL, 0x67332667ffc00b31ULL, 0x8eb44a8768581511ULL,
@@ -38,7 +38,7 @@ constexpr std::array<uint64_t, 80> k = {
     0x4cc5d4becb3e42b6ULL, 0x597f299cfc657e2aULL, 0x5fcb6fab3ad6faecULL, 0x6c44198c4a475817ULL
 };
 
-// Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ С„СѓРЅРєС†РёРё РґР»СЏ SHA-384
+// Вспомогательные функции для SHA-384
 inline uint64_t rotr64(uint64_t x, uint64_t n) { return (x >> n) | (x << (64 - n)); }
 inline uint64_t ch(uint64_t x, uint64_t y, uint64_t z) { return (x & y) ^ (~x & z); }
 inline uint64_t maj(uint64_t x, uint64_t y, uint64_t z) { return (x & y) ^ (x & z) ^ (y & z); }
@@ -50,47 +50,47 @@ inline uint64_t gamma1(uint64_t x) { return rotr64(x, 19) ^ rotr64(x, 61) ^ (x >
 
 QString SHA384::hash(const QString& input)
 {
-    // РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ UTF-8 Р±Р°Р№С‚С‹
+    // Преобразуем строку в UTF-8 байты
     QByteArray message = input.toUtf8();
     const uint8_t* msg = reinterpret_cast<const uint8_t*>(message.constData());
     uint64_t length = message.size();
 
-    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С…РµС€-Р·РЅР°С‡РµРЅРёР№
+    // Инициализация хеш-значений
     std::array<uint64_t, 8> hash = initialHash;
 
-    // РџРѕРґРіРѕС‚РѕРІРєР° СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РґРѕРїРѕР»РЅРµРЅРёРµРј
+    // Подготовка сообщения с дополнением
     uint64_t bitLength = length * 8;
     uint64_t newLength = ((((length + 16) / 128) + 1) * 128) - 1;
     std::vector<uint8_t> paddedMessage(newLength + 1, 0);
     std::memcpy(paddedMessage.data(), msg, length);
     paddedMessage[length] = 0x80;
 
-    // Р”РѕР±Р°РІР»СЏРµРј РґР»РёРЅСѓ СЃРѕРѕР±С‰РµРЅРёСЏ РІ Р±РёС‚Р°С… РІ РєРѕРЅРµС† (big-endian)
+    // Добавляем длину сообщения в битах в конец (big-endian)
     for (int i = 0; i < 8; ++i) {
         paddedMessage[newLength - 7 + i] = (bitLength >> (8 * (7 - i))) & 0xFF;
     }
 
-    // РћР±СЂР°Р±РѕС‚РєР° СЃРѕРѕР±С‰РµРЅРёСЏ Р±Р»РѕРєР°РјРё РїРѕ 1024 Р±РёС‚Р° (128 Р±Р°Р№С‚)
+    // Обработка сообщения блоками по 1024 бита (128 байт)
     for (uint64_t i = 0; i < paddedMessage.size(); i += 128) {
         std::array<uint64_t, 80> w = {0};
 
-        // Р Р°Р·Р±РёРІР°РµРј Р±Р»РѕРє РЅР° 16 СЃР»РѕРІ РїРѕ 64 Р±РёС‚Р° (big-endian)
+        // Разбиваем блок на 16 слов по 64 бита (big-endian)
         for (int t = 0; t < 16; ++t) {
             for (int j = 0; j < 8; ++j) {
                 w[t] = (w[t] << 8) | paddedMessage[i + t * 8 + j];
             }
         }
 
-        // Р Р°СЃС€РёСЂСЏРµРј РїРµСЂРІС‹Рµ 16 СЃР»РѕРІ РІ РѕСЃС‚Р°Р»СЊРЅС‹Рµ 64 СЃР»РѕРІР°
+        // Расширяем первые 16 слов в остальные 64 слова
         for (int t = 16; t < 80; ++t) {
             w[t] = gamma1(w[t-2]) + w[t-7] + gamma0(w[t-15]) + w[t-16];
         }
 
-        // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЂР°Р±РѕС‡РёС… РїРµСЂРµРјРµРЅРЅС‹С…
+        // Инициализация рабочих переменных
         uint64_t a = hash[0], b = hash[1], c = hash[2], d = hash[3];
         uint64_t e = hash[4], f = hash[5], g = hash[6], h = hash[7];
 
-        // РћСЃРЅРѕРІРЅРѕР№ С†РёРєР» СЃР¶Р°С‚РёСЏ
+        // Основной цикл сжатия
         for (int t = 0; t < 80; ++t) {
             uint64_t t1 = h + sigma1(e) + ch(e, f, g) + k[t] + w[t];
             uint64_t t2 = sigma0(a) + maj(a, b, c);
@@ -104,12 +104,12 @@ QString SHA384::hash(const QString& input)
             a = t1 + t2;
         }
 
-        // РћР±РЅРѕРІР»СЏРµРј С…РµС€-Р·РЅР°С‡РµРЅРёСЏ
+        // Обновляем хеш-значения
         hash[0] += a; hash[1] += b; hash[2] += c; hash[3] += d;
         hash[4] += e; hash[5] += f; hash[6] += g; hash[7] += h;
     }
 
-    // Р¤РѕСЂРјРёСЂСѓРµРј РёС‚РѕРіРѕРІС‹Р№ С…РµС€ (РїРµСЂРІС‹Рµ 384 Р±РёС‚Р° = 6 СЃР»РѕРІ РїРѕ 64 Р±РёС‚Р°)
+    // Формируем итоговый хеш (первые 384 бита = 6 слов по 64 бита)
     QByteArray result;
     for (int i = 0; i < 6; ++i) {
         for (int j = 7; j >= 0; --j) {

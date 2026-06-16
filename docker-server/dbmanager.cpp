@@ -1,4 +1,4 @@
-﻿#include "dbmanager.h"
+#include "dbmanager.h"
 #include "sha384.h"
 #include <QSqlQuery>
 #include <QSqlError>
@@ -50,17 +50,32 @@ void DatabaseManager::createTables()
 {
     QSqlQuery query(m_database);
 
+    // колонка role, которая по умолчанию равна 'user'
     const QStringList tables = {
         "CREATE TABLE IF NOT EXISTS users ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "login TEXT UNIQUE NOT NULL, "
-        "password TEXT NOT NULL)",
-
+        "password TEXT NOT NULL, "
+        "role TEXT NOT NULL DEFAULT 'user')"
     };
 
     for (const auto& tableSql : tables) {
         if (!query.exec(tableSql)) {
             qCritical() << "Failed to create table:" << query.lastError().text();
+        }
+    }
+
+    // Автоматическое создание админа в базе данных при первом запуске, если его еще нет
+    query.prepare("SELECT id FROM users WHERE login = 'admin'");
+    if (query.exec() && !query.next()) {
+        query.prepare("INSERT INTO users (login, password, role) VALUES (:login, :password, :role)");
+        query.bindValue(":login", "admin");
+        query.bindValue(":password", hashPassword("admin"));
+        query.bindValue(":role", "admin");
+        if (!query.exec()) {
+            qCritical() << "Failed to seed admin user:" << query.lastError().text();
+        } else {
+            qInfo() << "Default admin user created in Database";
         }
     }
 }
