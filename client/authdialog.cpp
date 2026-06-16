@@ -1,4 +1,4 @@
-﻿#include "authdialog.h"
+#include "authdialog.h"
 #include "ui_authdialog.h"
 #include "regdialog.h"
 #include "singletonclient.h"
@@ -13,13 +13,31 @@ AuthDialog::AuthDialog(QWidget *parent)
     ui->textEditStatus->setReadOnly(true);
 
     connect(SingletonClient::instance(), &SingletonClient::responseReceived, this, [this](const QString& text) {
+        if (this->parentWidget() && !this->parentWidget()->isVisible()) {
+            return;
+        }
+
         ui->textEditStatus->append("> Response:\n" + text);
 
         if (text.contains("Authentication successful", Qt::CaseInsensitive)) {
-            if (!mainWindow)
-                mainWindow = new MainWindow();
-            mainWindow->show();
-            this->hide();
+            QWidget *container = this->parentWidget();
+            if (container) {
+                // Вырезаем роль после двоеточия (если двоеточия нет, по дефолту 'user')
+                QString role = "user";
+                if (text.contains(":")) {
+                    role = text.split(":").last().trimmed();
+                }
+
+                // Передаем роль в конструктор MainWindow
+                MainWindow *mainWin = new MainWindow(role, container);
+                mainWin->setAttribute(Qt::WA_DeleteOnClose);
+                mainWin->show();
+
+                container->hide();
+            }
+
+            ui->textEditStatus->clear();
+            ui->lineEditPassword->clear();
         }
     });
 
@@ -48,10 +66,4 @@ void AuthDialog::on_pushButtonLogin_clicked()
 
     QString command = QString("auth %1:%2").arg(username, password);
     SingletonClient::instance()->transmitCommand(command);
-}
-
-void AuthDialog::on_pushButtonRegister_clicked()
-{
-    RegisterDialog regDialog(this);
-    regDialog.exec();
 }

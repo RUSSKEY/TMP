@@ -1,4 +1,4 @@
-﻿#include "regdialog.h"
+#include "regdialog.h"
 #include "ui_regdialog.h"
 #include "singletonclient.h"
 
@@ -11,9 +11,15 @@ RegisterDialog::RegisterDialog(QWidget *parent)
     ui->textEditStatus->setReadOnly(true);
 
     connect(ui->pushButtonRegister, &QPushButton::clicked, this, &RegisterDialog::onRegisterClicked);
-    connect(ui->pushButtonBackToLogin, &QPushButton::clicked, this, &RegisterDialog::handleBackToLogin);
+    connect(ui->pushButtonBackToLogin, &QPushButton::clicked, this, &RegisterDialog::onBackToLoginClicked);
 
     connect(SingletonClient::instance(), &SingletonClient::responseReceived, this, [this](const QString& response) {
+
+        // Если окно скрыто, не обрабатываем сигналы
+        if (!this->isVisible()) {
+            return;
+        }
+
         ui->textEditStatus->setText(response);
 
         if (response.contains("Registration successful", Qt::CaseInsensitive)) {
@@ -22,8 +28,8 @@ RegisterDialog::RegisterDialog(QWidget *parent)
     });
 }
 
-void RegisterDialog::handleBackToLogin() {
-    this->reject();
+void RegisterDialog::onBackToLoginClicked() {
+    emit showAuthRequested();
 }
 
 RegisterDialog::~RegisterDialog()

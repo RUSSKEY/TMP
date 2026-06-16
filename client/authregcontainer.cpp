@@ -1,11 +1,11 @@
-﻿#include "authregcontainer.h"
+#include "authregcontainer.h"
 #include <QtWidgets/QBoxLayout>
 
 AuthRegContainer::AuthRegContainer(QWidget *parent) : QWidget(parent) {
     stackedWidget = new QStackedWidget(this);
 
-    authDialog = new AuthDialog();
-    regDialog = new RegisterDialog();
+    authDialog = new AuthDialog(this);
+    regDialog = new RegisterDialog(this);
 
     stackedWidget->addWidget(authDialog);
     stackedWidget->addWidget(regDialog);
@@ -14,7 +14,6 @@ AuthRegContainer::AuthRegContainer(QWidget *parent) : QWidget(parent) {
     layout->addWidget(stackedWidget);
     setLayout(layout);
 
-    // РџРѕРґРєР»СЋС‡РµРЅРёРµ СЃРёРіРЅР°Р»РѕРІ РґР»СЏ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ РѕРєРѕРЅ
     connect(authDialog, &AuthDialog::showRegisterRequested, this, [this]() {
         stackedWidget->setCurrentWidget(regDialog);
     });

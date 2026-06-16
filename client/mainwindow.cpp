@@ -1,19 +1,38 @@
-﻿#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "singletonclient.h"
-#include "authdialog.h"
 #include <QFileDialog>
 #include <cmath>
 #include <QMessageBox>
+#include <QStackedWidget>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QString role, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_userRole(role) // Сохраняем переданную роль в приватную переменную
 {
+    //
     ui->setupUi(this);
-    setWindowTitle("Crypto Application");
     ui->textEdit->setReadOnly(true);
 
+    // Настройка блока уравнений
+    ui->groupBoxEquation->setTitle("Решение кубических уравнений Ax³+Bx²+Cx+D=0 (Метод хорд)");
+    ui->funcInput->setPlaceholderText("Задайте коэффициенты через двоеточие -> A:B:C:D (например, 1:0:-3:1)");
+
+    // 2. ДИФФЕРЕНЦИАЦИЯ ИНТЕРФЕЙСА
+    if (m_userRole == "admin") {
+        setWindowTitle("ПАНЕЛЬ АДМИНИСТРАТОРА");
+        ui->groupBox_2->setTitle("Управление Базой Данных / Вывод");
+        ui->pushButtonProcess->setText("Выполнить админ-команду");
+        ui->lineEditInput->setPlaceholderText("Введите: get_users_sorted ИЛИ search_user:логин ИЛИ delete:логин");
+    } else {
+        setWindowTitle("Пользовательский режим");
+        ui->groupBox_2->setTitle("Обработка данных / Вывод");
+        ui->pushButtonProcess->setText("Обработать");
+        ui->lineEditInput->setPlaceholderText("Введите текст для отправки на сервер...");
+    }
+
+    // Вывод последнего ответа, если он был
     QString lastResponse = SingletonClient::instance()->latestResponse();
     if (!lastResponse.isEmpty()) {
         ui->textEdit->append("> Last response:\n" + lastResponse);
@@ -40,13 +59,21 @@ MainWindow::~MainWindow() {
 void MainWindow::on_pushButtonProcess_clicked()
 {
     QString input = ui->lineEditInput->text().trimmed();
-    if (input.isEmpty()) {
-        ui->textEdit->append("> Error: Input is empty");
-        return;
-    }
+    if (input.isEmpty()) return;
 
-    ui->textEdit->append("> Processing encryption request: " + input);
-    SingletonClient::instance()->transmitCommand("ENCRYPT:" + input);
+    if (m_userRole == "admin") {
+        // Если это админ, мы шлем команду как есть прямо в сокет
+        // Чтобы сервер понял админа, обернем команду в префикс "equation: "
+        QString adminCmd = "equation: " + input;
+
+        ui->textEdit->append("> Отправка админ-команды: " + input);
+        SingletonClient::instance()->transmitCommand(adminCmd);
+    } else {
+        // Обычный пользователь
+        QString command = "ENCRYPT:" + input;
+        ui->textEdit->append("> Sending text to encrypt: " + input);
+        SingletonClient::instance()->transmitCommand(command);
+    }
 }
 
 void MainWindow::on_pushButtonLoadImage_clicked()
@@ -70,7 +97,6 @@ void MainWindow::on_pushButtonSolveEquation_clicked()
         return;
     }
 
-    // Р¤РѕСЂРјРёСЂСѓРµРј РєРѕРјР°РЅРґСѓ РІ РїСЂР°РІРёР»СЊРЅРѕРј С„РѕСЂРјР°С‚Рµ (РЅРёР¶РЅРёР№ СЂРµРіРёСЃС‚СЂ + РїСЂРѕР±РµР»)
     QString equationCmd = QString("equation: %1:%2:%3:%4")
                               .arg(func)
                               .arg(a)
@@ -83,43 +109,19 @@ void MainWindow::on_pushButtonSolveEquation_clicked()
 
 void MainWindow::on_pushButtonLogout_clicked()
 {
-    AuthDialog *authDialog = new AuthDialog();
-    authDialog->show();
+    if (this->parentWidget()) {
+        QStackedWidget *stacked = this->parentWidget()->findChild<QStackedWidget*>();
+        QWidget *authWin = this->parentWidget()->findChild<QWidget*>("AuthDialog");
+
+        if (stacked && authWin) {
+            stacked->setCurrentWidget(authWin);
+        } else if (stacked) {
+            // Если findChild не нашёл по имени, просто переключаем на первый виджет (окно логина)
+            stacked->setCurrentIndex(0);
+        }
+
+        this->parentWidget()->show();
+    }
+    this->setAttribute(Qt::WA_DeleteOnClose);
     this->close();
-}
-
-void MainWindow::on_pushButtonSaveImage_clicked()
-{
-    if (currentImagePath.isEmpty()) {
-        ui->textEdit->append("> Error: No image loaded");
-        return;
-    }
-
-    QString filePath = QFileDialog::getSaveFileName(this, "Save Image", "", "Images (*.png *.jpg *.bmp)");
-    if (!filePath.isEmpty()) {
-        ui->textEdit->append("> Image saved to: " + filePath);
-    }
-}
-
-void MainWindow::on_pushButtonEncrypt_clicked()
-{
-    QString input = ui->lineEditInput->text().trimmed();
-    if (input.isEmpty()) {
-        ui->textEdit->append("> Error: Input is empty");
-        return;
-    }
-
-    ui->textEdit->append("> Encrypting: " + input);
-    SingletonClient::instance()->transmitCommand("ENCRYPT:" + input);
-}
-
-void MainWindow::on_pushButtonDecode_clicked()
-{
-    if (currentImagePath.isEmpty()) {
-        ui->textEdit->append("> Error: No image loaded");
-        return;
-    }
-
-    ui->textEdit->append("> Decoding message from image");
-    SingletonClient::instance()->transmitCommand("DECODE:" + currentImagePath);
 }

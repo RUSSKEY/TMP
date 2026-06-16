@@ -1,4 +1,4 @@
-﻿#include "singletonclient.h"
+#include "singletonclient.h"
 #include <QDebug>
 
 SingletonClient* SingletonClient::m_instance = nullptr;
